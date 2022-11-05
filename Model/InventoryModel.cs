@@ -8,9 +8,9 @@ namespace ObjectOrientedPrograms.Model
 {
     public class InventoryModel
     {
-        public CommonProp Rice { get; set; }
-        public CommonProp Pulses { get; set; }
-        public CommonProp Wheats { get; set; }
+        public List<CommonProp> Rice { get; set; }
+        public List<CommonProp> Pulses { get; set; }
+        public List<CommonProp> Wheats { get; set; }
     }
 
     public class CommonProp
