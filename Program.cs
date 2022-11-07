@@ -1,6 +1,6 @@
 ﻿using ObjectOrientedPrograms.Repository;
 
-namespace Object_Oriented_Programs
+namespace ObjectOrientedPrograms
 {
     internal class Program
     {
@@ -8,8 +8,8 @@ namespace Object_Oriented_Programs
         {
             Console.WriteLine("Welcome to Object Oriented Program\n");
 
-            InventoryManager inventoryManager = new InventoryManager();
-            inventoryManager.CalcInventoryValue();
+            StockManager stockManager = new StockManager();
+            stockManager.CalcStockValue();
         }
     }
 }

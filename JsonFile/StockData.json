@@ -1,0 +1,49 @@
+{
+  "Stocks": [
+    {
+      "StockName": "Tesla",
+      "NumOfShares": 10,
+      "SharePrice": 1000
+    },
+    {
+      "StockName": "Google",
+      "NumOfShares": 20,
+      "SharePrice": 2000
+    },
+    {
+      "StockName": "Microsoft",
+      "NumOfShares": 30,
+      "SharePrice": 3000
+    },
+    {
+      "StockName": "Twitter",
+      "NumOfShares": 40,
+      "SharePrice": 4000
+    },
+    {
+      "StockName": "Amazon",
+      "NumOfShares": 50,
+      "SharePrice": 5000
+    },    
+    {
+      "StockName": "Apple",
+      "NumOfShares": 60,
+      "SharePrice": 6000
+    },
+    {
+      "StockName": "Netflix",
+      "NumOfShares": 70,
+      "SharePrice": 7000
+    },
+    {
+      "StockName": "Mercedes",
+      "NumOfShares": 80,
+      "SharePrice": 8000
+    },
+    {
+      "StockName": "Audi",
+      "NumOfShares": 90,
+      "SharePrice": 9000
+    }
+  ]
+}
