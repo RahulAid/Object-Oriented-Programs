@@ -11,7 +11,7 @@ namespace ObjectOrientedPrograms.Repository
 {
     public class StockManager
     {
-        public string FilePath = @"D:\BridgeLabzz\Object-Oriented-Programs\JsonFile\InventoryData.json";
+        public string FilePath = @"D:\BridgeLabzz\Object-Oriented-Programs\JsonFile\StockData.json";
         public void CalcStockValue()
         {
             var jsonData = File.ReadAllText(FilePath);
