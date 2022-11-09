@@ -9,7 +9,7 @@ namespace ObjectOrientedPrograms
                 Console.WriteLine("Welcome to Object Oriented Program");
            
                 CommercialDataProcessing objDataProcessing = new CommercialDataProcessing();
-                Console.WriteLine("\nChoose the operation to be performed on Stocks : \n1.Buy Stocks \n2.Sell Stocks \n3 Calculate Total Value of Account");
+                Console.WriteLine("\nChoose the operation to be performed on Stocks : \n1.Add Shares \n2.Remove Shares ");
                 int option = Convert.ToInt32(Console.ReadLine());
 
                 switch (option)
@@ -17,20 +17,16 @@ namespace ObjectOrientedPrograms
                     case 1:
                         {
                             objDataProcessing.CompanyStockList();
-                            objDataProcessing.BuyStocks();
+                            objDataProcessing.AddShares();
                             break;
                         }
                     case 2:
                         {
-                            objDataProcessing.CustomerStockList();
-                            objDataProcessing.SellStocks();
+                            objDataProcessing.CompanyStockList();
+                            objDataProcessing.RemoveShares();
                             break;
                         }
-                    case 3:
-                        {
-                            objDataProcessing.valueOf();
-                            break;
-                        }
+                    
                 }
                 Console.ReadLine();
                 

@@ -7,6 +7,7 @@ namespace ObjectOrientedPrograms.Repository
     {
         public string FilePath = @"D:\BridgeLabzz\Object-Oriented-Programs\JsonFile\CustomerData.json";
         public static string filePath = @"D:\BridgeLabzz\Object-Oriented-Programs\JsonFile\StockData.json";
+        string companyAccountData = File.ReadAllText(filePath);
 
         List<StockAccount> objstockAccounts = new List<StockAccount>();
         StockModel objstockData = new StockModel();
@@ -21,207 +22,64 @@ namespace ObjectOrientedPrograms.Repository
             var customerAccountData = File.ReadAllText(FilePath);
             objstockAccounts = JsonConvert.DeserializeObject<List<StockAccount>>(customerAccountData);
         }
-        
-        string? customerName;
-        string companyStockName = " ";
-        int balanceLeft = 0;
-        int currentSharePrice = 0;
-        bool existingCustomer = false;
 
-        public void BuyStocks() 
+        public void AddShares()
         {
-            int boughtShareValue = 0;
-            Console.Write("\nEnter Customer Name: ");
-            customerName = Console.ReadLine();
-            Console.Write("\nEnter the Name of Stock to be Bought: ");
+
+            Console.Write("\nEnter the Name of Stock to be Added: ");
             string? stockName = Console.ReadLine();
-            Console.Write("\nEnter Number of Shares to be Bought: ");
+            Console.Write("\nEnter Number of Shares to be Added: ");
             int numOfShares = Convert.ToInt32(Console.ReadLine());
+            Console.Write("\nEnter Price of Share to be Added: ");
+            int currentSharePrice = Convert.ToInt32(Console.ReadLine());
+
 
             CompanyStockAccount();
-            CustomerStockAccount();
 
-            //Check condition to Buy
-
-            foreach (var item in objstockData.Stocks) 
-            {
-                if (item.StockName == stockName)
-                {
-                    Console.WriteLine($"{stockName} Share is available in the Database");
-                    foreach (var item2 in objstockAccounts)
-                    {
-                        if (item2.CustomerInfo.CustomerName == customerName)
-                        {
-                            Console.WriteLine($"{customerName} is eligible to Buy Stocks");
-                            if (item.NumOfShares >= numOfShares)
-                            {
-                                Console.WriteLine($"{numOfShares} shares can be bought from {stockName}");
-                                item.NumOfShares -= numOfShares;
-                                boughtShareValue = numOfShares * item.SharePrice;
-                                currentSharePrice = item.SharePrice;
-                                companyStockName = item.StockName;
-                            }
-                            else
-                            {
-                                Console.WriteLine("\nDesired no. Stocks exceeds the Available Limit");
-                            }
-                        }
-                        else if(item2.CustomerInfo.CustomerName != customerName)
-                        {
-                            Console.WriteLine($"{customerName} is not eligible to Buy Stocks");
-
-                        }
-                    }
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine($"{stockName} Share is not available in the Database");
-                }
-            }
+            objstockData.Stocks.Add(new StockProp() { StockName = stockName, NumOfShares = numOfShares, SharePrice = currentSharePrice });
             saveCompanyData();
+            CompanyStockList();
 
-           
-            foreach (var item in objstockAccounts) 
-            {
-                if (item.CustomerInfo.CustomerName == customerName)
-                {
-                    existingCustomer = true;
-                    if (item.CustomerInfo.CustomerAccountBalance >= boughtShareValue)
-                    {
-                        item.CustomerInfo.CustomerAccountBalance -= boughtShareValue;
-                        balanceLeft = item.CustomerInfo.CustomerAccountBalance;
-                        if (stockName == companyStockName)
-                        {
-
-                            foreach (ShareDetails item2 in item.ShareDetails)
-                            {
-                                if (item2.CompanyName == stockName)
-                                {
-
-                                    item2.NoOfShares += numOfShares;
-                                    break;
-                                }
-                            }
-
-                            Console.WriteLine($"\n{numOfShares} Numbers of {stockName} Shares are Bought");
-
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nShare Details not found");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine($"\n{companyStockName} Shares can not be Bought due to Insufficient Balance");
-                    }
-                }
-            }
-            
-            saveCustomerData();
         }
 
-        public void SellStocks() 
+        public void RemoveShares()
         {
-            int soldShareValue = 0;
-            Console.Write("\nEnter Customer Name: ");
-            customerName = Console.ReadLine();
-            Console.Write("\nEnter the Name of Stock to be Sold: ");
+
+            Console.Write("\nEnter the Name of Stock to be Removed : ");
             string? stockName = Console.ReadLine();
-            Console.Write("\nEnter Number of Shares to be Sold: ");
-            int numOfShares = Convert.ToInt32(Console.ReadLine());
 
             CompanyStockAccount();
-            CustomerStockAccount();
 
-            //Check Condition to Sell
+            //Check Condition to Remove Share
 
-            foreach (var item in objstockAccounts) 
-            {
-                if (item.CustomerInfo.CustomerName == customerName)
-                {
-                    Console.WriteLine($"{customerName} is eligible to Sell Stocks");
-                    existingCustomer = true;
-                    foreach (ShareDetails item2 in item.ShareDetails)
-                    {
-                        if (item2.CompanyName == stockName)
-                        {
-                            Console.WriteLine($"{stockName} share is available in the Database");
-                            if (item2.NoOfShares >= numOfShares)
-                            {
-                                item2.NoOfShares -= numOfShares;
-                                currentSharePrice = item2.PricePerShare;
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("Stock cannot be Sold");
-                            }
-                            break;
-                        }
-                    }
-                    item.CustomerInfo.CustomerAccountBalance += numOfShares * currentSharePrice;
-                    balanceLeft = item.CustomerInfo.CustomerAccountBalance;
-                    soldShareValue = numOfShares * currentSharePrice;
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine($"{customerName} is not eligible to Sell Stocks");
-                }
-            }
-            
-
-            CompanyStockAccount();
-            foreach (var item in objstockData.Stocks) 
+            foreach (var item in objstockData.Stocks)
             {
                 if (item.StockName == stockName)
                 {
-                    foreach (var item2 in objstockAccounts)
-                    {
-                        if (item2.CustomerInfo.CustomerName == customerName)
-                        {
-                            item.NumOfShares += numOfShares;
-                            break;
-                        }
-                    }
+
+
+                    objstockData.Stocks.Remove(item);
+                    Console.WriteLine($"{stockName} Share has been Removed");
+                    break;
                 }
+
             }
+
             saveCompanyData();
-            Console.WriteLine($"\nDesired Shares are Sold");
+            CompanyStockList();
 
         }
         public void saveCompanyData()
         {
             string stockDeduction = JsonConvert.SerializeObject(objstockData);
             File.WriteAllText(filePath, stockDeduction);
+
         }
 
         public void saveCustomerData()
         {
             string stockAddition = JsonConvert.SerializeObject(objstockAccounts);
             File.WriteAllText(FilePath, stockAddition);
-        }
-
-        public void valueOf() 
-        {
-            CustomerStockAccount();
-            int totalValue = 0;
-            Console.Write("\nEnter Customer Name: ");
-            string? customerName = Console.ReadLine();
-
-            foreach (var item in objstockAccounts)
-            {
-                if (item.CustomerInfo.CustomerName == customerName)
-                {
-                    foreach (var data in item.ShareDetails)
-                    {
-                        totalValue += data.NoOfShares * data.PricePerShare;
-                    }
-                }
-            }
-            Console.WriteLine($"\n{customerName} has a Total Value of : {totalValue}");
         }
 
         public void CompanyStockList()
@@ -248,18 +106,18 @@ namespace ObjectOrientedPrograms.Repository
             {
                 Console.WriteLine(
                 "\nStock Name        : " + data.CustomerInfo.CustomerName + "\n" +
-                "Number of infos  : " + data.CustomerInfo.CustomerPhoneNo + "\n" +
-                "Price per info   : " + data.CustomerInfo.CustomerEmail + "\n" +
-                "Price per info   : " + data.CustomerInfo.CustomerAddress + "\n" +
-                "Price per info   : " + data.CustomerInfo.CustomerAccountBalance
+                "Customer Phone No  : " + data.CustomerInfo.CustomerPhoneNo + "\n" +
+                "Customer Email   : " + data.CustomerInfo.CustomerEmail + "\n" +
+                "Customer Address   : " + data.CustomerInfo.CustomerAddress + "\n" +
+                "Customer Account Balance   : " + data.CustomerInfo.CustomerAccountBalance
                 );
 
                 foreach (var shares in data.ShareDetails)
                 {
                     Console.WriteLine(
                     "\nStock Name        : " + shares.CompanyName + "\n" +
-                    "Number of infos  : " + shares.NoOfShares + "\n" +
-                    "Price per info   : " + shares.PricePerShare
+                    "Number of Shares  : " + shares.NoOfShares + "\n" +
+                    "Price per Share   : " + shares.PricePerShare
                     );
                 }
             }
