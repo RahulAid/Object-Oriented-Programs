@@ -95,7 +95,7 @@ namespace ObjectOrientedPrograms.Repository
                                 item.ShareDetails.Add(new ShareDetails() { CompanyName = stockName, NoOfShares = numOfShares, PricePerShare = currentSharePrice });
                             }
                             Console.WriteLine($"\n{numOfShares} no. of {stockName} shares are bought at a price of {valueOfSharesBought}");
-                            Console.WriteLine("\nTransaction Completed");
+                            Console.WriteLine($"\nTransaction Completed at {DateTime.Now}");
                         }
                         else
                         {
@@ -180,7 +180,7 @@ namespace ObjectOrientedPrograms.Repository
             }
             saveCompany();
             Console.WriteLine($"\n{numOfShares} no. of {stockName} shares are sold for a price of {valueOfSharesSold}");
-            Console.WriteLine("Transaction Successfully Completed");
+            Console.WriteLine($"Transaction Successfully Completed at {DateTime.Now}");
         }
 
         public void saveCompany()
